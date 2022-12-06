@@ -1,0 +1,161 @@
+Title: "&5Custom Enchants Shop"
+Size: "9 * 6"
+Buttons:
+  Player_Info:
+    Slot: "4"
+    Material: PLAYER_HEAD
+    Player_Skull_Name: "%player_name%"
+    Glow: true
+    Title: "&6&l%player_name%'s Info"
+    Lore:
+      - "&6Money : %vault_eco_balance_formatted%"
+      - "&6Power : %powercurrency_playerpower%"
+      - "&6Lives : %lifemc_lives%"
+  Haste:
+    Slot: "9 * 2 + 3"
+    Material: ENCHANTED_BOOK
+    Title: "&7&lHaste"
+    Lore:
+      - "&f* &eApplies to &7>> &9Tools"
+      - "&f* &eMax Level &7>> &fI"
+      - "&f* &ePower Price &7>> &a350"
+      - "&f* &eDescription &7>> &5Grants the user a"
+      - "&5Haste Effect when holding a tool."
+  Speed:
+    Slot: "9 * 2 + 4"
+    Material: ENCHANTED_BOOK
+    Title: "&7&lSpeed"
+    Lore:
+      - "&f* &eApplies to &7>> &9Boots"
+      - "&f* &eMax Level &7>> &fI"
+      - "&f* &ePower Price &7>> &a350"
+      - "&f* &eDescription &7>> &5Grants the user a"
+      - "&5Speed Boost when wearing boots."
+  Anti-Hunger:
+    Slot: "9 * 2 + 5"
+    Material: ENCHANTED_BOOK
+    Title: "&7&lAnti-Hunger"
+    Lore:
+      - "&f* &eApplies to &7>> &9Helmet"
+      - "&f* &eMax Level &7>> &fI"
+      - "&f* &ePower Price &7>> &a500"
+      - "&f* &eDescription &7>> &5Grants the user "
+      - "&5Hunger Saturation when wearing a helmet."
+  Drill:
+    Slot: "9 * 3 + 4"
+    Material: ENCHANTED_BOOK
+    Title: "&7&lDrill"
+    Lore:
+      - "&f* &eApplies to &7>> &9Tools"
+      - "&f* &eMax Level &7>> &fI"
+      - "&f* &ePower Price &7>> &a700"
+      - "&f* &eDescription &7>> &5When a tool is "
+      - "&5used, it will mine in a 3x3 area."
+  1:
+    Slot: "9 * 0 + 0"
+    Material: GRAY_STAINED_GLASS_PANE
+    Title: " "
+  2:
+    Slot: "9 * 0 + 1"
+    Material: GRAY_STAINED_GLASS_PANE
+    Title: " "
+  3:
+    Slot: "9 * 0 + 2"
+    Material: GRAY_STAINED_GLASS_PANE
+    Title: " "
+  4:
+    Slot: "9 * 0 + 3"
+    Material: GRAY_STAINED_GLASS_PANE
+    Title: " "
+  6:
+    Slot: "9 * 0 + 5"
+    Material: GRAY_STAINED_GLASS_PANE
+    Title: " "
+  7:
+    Slot: "9 * 0 + 6"
+    Material: GRAY_STAINED_GLASS_PANE
+    Title: " "
+  8:
+    Slot: "9 * 0 + 7"
+    Material: GRAY_STAINED_GLASS_PANE
+    Title: " "
+  9:
+    Slot: "9 * 0 + 8"
+    Material: GRAY_STAINED_GLASS_PANE
+    Title: " "
+  10:
+    Slot: "9 * 1 + 0"
+    Material: GRAY_STAINED_GLASS_PANE
+    Title: " "
+  11:
+    Slot: "9 * 1 + 8"
+    Material: GRAY_STAINED_GLASS_PANE
+    Title: " "
+  12:
+    Slot: "9 * 2 + 0"
+    Material: GRAY_STAINED_GLASS_PANE
+    Title: " "
+  13:
+    Slot: "9 * 2 + 8"
+    Material: GRAY_STAINED_GLASS_PANE
+    Title: " "
+  14:
+    Slot: "9 * 3 + 0"
+    Material: GRAY_STAINED_GLASS_PANE
+    Title: " "
+  15:
+    Slot: "9 * 3 + 8"
+    Material: GRAY_STAINED_GLASS_PANE
+    Title: " "
+  16:
+    Slot: "9 * 4 + 0"
+    Material: GRAY_STAINED_GLASS_PANE
+    Title: " "
+  17:
+    Slot: "9 * 4 + 8"
+    Material: GRAY_STAINED_GLASS_PANE
+    Title: " "
+  18:
+    Slot: "9 * 5 + 0"
+    Material: GRAY_STAINED_GLASS_PANE
+    Title: " "
+  19:
+    Slot: "9 * 5 + 8"
+    Material: GRAY_STAINED_GLASS_PANE
+    Title: " "
+  20:
+    Slot: "9 * 6 + 0"
+    Material: GRAY_STAINED_GLASS_PANE
+    Title: " "
+  21:
+    Slot: "9 * 6 + 8"
+    Material: GRAY_STAINED_GLASS_PANE
+    Title: " "
+  22:
+    Slot: "9 * 5 + 1"
+    Material: GRAY_STAINED_GLASS_PANE
+    Title: " "
+  23:
+    Slot: "9 * 5 + 2"
+    Material: GRAY_STAINED_GLASS_PANE
+    Title: " "
+  24:
+    Slot: "9 * 5 + 3"
+    Material: GRAY_STAINED_GLASS_PANE
+    Title: " "
+  25:
+    Slot: "9 * 5 + 4"
+    Material: GRAY_STAINED_GLASS_PANE
+    Title: " "
+  26:
+    Slot: "9 * 5 + 5"
+    Material: GRAY_STAINED_GLASS_PANE
+    Title: " "
+  27:
+    Slot: "9 * 5 + 6"
+    Material: GRAY_STAINED_GLASS_PANE
+    Title: " "
+  28:
+    Slot: "9 * 5 + 7"
+    Material: GRAY_STAINED_GLASS_PANE
+    Title: " "
