@@ -6,7 +6,6 @@ import me.clip.placeholderapi.PlaceholderAPI;
 import me.whipmegrandma.customenchants.manager.EnchantData;
 import me.whipmegrandma.customenchants.manager.EnchantsManager;
 import me.whipmegrandma.powercurrency.manager.PowerManager;
-import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
@@ -139,7 +138,7 @@ public class EnchantShopMenu extends YamlConfig {
 
 							CompSound.ENTITY_VILLAGER_NO.play(player);
 
-							Bukkit.getLogger().severe("PowerCurrency isn't loaded. All enchants are free.");
+							Common.log("&4PowerCurrency isn't loaded. All enchants are free.");
 						}
 					}
 				}
