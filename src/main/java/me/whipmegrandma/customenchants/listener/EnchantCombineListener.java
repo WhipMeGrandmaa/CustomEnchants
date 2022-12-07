@@ -15,6 +15,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.mineacademy.fo.Common;
 import org.mineacademy.fo.annotation.AutoRegister;
 import org.mineacademy.fo.menu.model.ItemCreator;
@@ -98,22 +101,48 @@ public final class EnchantCombineListener implements Listener {
 		Player player = (Player) event.getWhoClicked();
 		ItemStack clicked = clickedOrCursor ? event.getCurrentItem() : event.getCursor();
 
-		if (!Common.callEvent(new EnchantCombineEvent(player, clicked, enchant, level)))
-			return;
-
-		Integer slot = event.getSlot();
+		int slot = event.getSlot();
 		Inventory inventory = event.getClickedInventory();
 
 		ItemStack updatedItem = ItemCreator.of(clicked).enchant(enchant, level).make();
+
+		if (!Common.callEvent(new EnchantCombineEvent(player, updatedItem, enchant, level)))
+			return;
 
 		inventory.setItem(slot, clickedOrCursor ? updatedItem : null);
 		event.setCancelled(true);
 		player.setItemOnCursor(clickedOrCursor ? null : updatedItem);
 
+		PlayerInventory inventoryPlayer = player.getInventory();
+		ItemStack itemHeld = inventoryPlayer.getItemInMainHand();
+
+		ItemStack helmet = inventoryPlayer.getHelmet();
+		ItemStack chestplate = inventoryPlayer.getChestplate();
+		ItemStack leggings = inventoryPlayer.getLeggings();
+		ItemStack boots = inventoryPlayer.getBoots();
+
+		String name = updatedItem.getType().toString().toLowerCase();
+
+		if (!updatedItem.equals(itemHeld) && !updatedItem.equals(helmet) && !updatedItem.equals(chestplate) && !updatedItem.equals(leggings) && !updatedItem.equals(boots))
+			return;
+
+		PotionEffect effect = null;
+
+		if (updatedItem.containsEnchantment(SpeedEnchant.getInstance()))
+			effect = new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 0);
+
+		if (updatedItem.containsEnchantment(AntiHungerEnchant.getInstance()))
+			effect = new PotionEffect(PotionEffectType.SATURATION, Integer.MAX_VALUE, 0);
+
+		if (updatedItem.containsEnchantment(HasteEnchant.getInstance()))
+			effect = effect = new PotionEffect(PotionEffectType.FAST_DIGGING, Integer.MAX_VALUE, 0);
+
+		if (effect != null)
+			player.addPotionEffect(effect);
 	}
 
 	@EventHandler
-	public void onCombine(EnchantCombineEvent event) {
+	public void onCombineEffect(EnchantCombineEvent event) {
 		Player player = event.getPlayer();
 		Location location = player.getLocation();
 

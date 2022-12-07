@@ -19,10 +19,12 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.ExperienceOrb;
+import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.inventory.ItemStack;
@@ -198,6 +200,30 @@ public final class EnchantEffectListener implements Listener {
 		PotionEffectType effect = PotionEffectType.FAST_DIGGING;
 
 		player.removePotionEffect(effect);
+	}
+
+	@EventHandler
+	public void onInventoryMove(InventoryClickEvent event) {
+		HumanEntity entity = event.getWhoClicked();
+
+		if (!(entity instanceof Player))
+			return;
+
+		Player player = (Player) entity;
+		int heldSlot = player.getInventory().getHeldItemSlot();
+
+		int clickedSlot = event.getSlot();
+		ItemStack clickedItem = event.getCurrentItem();
+		ItemStack cursor = event.getCursor();
+
+		if (heldSlot != clickedSlot)
+			return;
+
+		if (clickedItem != null && clickedItem.containsEnchantment(HasteEnchant.getInstance())) ;
+		player.removePotionEffect(PotionEffectType.FAST_DIGGING);
+
+		if (cursor != null && cursor.containsEnchantment(HasteEnchant.getInstance()))
+			player.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, Integer.MAX_VALUE, 0));
 	}
 
 	private void drillExecute(Location locationBlock, Player player) {
