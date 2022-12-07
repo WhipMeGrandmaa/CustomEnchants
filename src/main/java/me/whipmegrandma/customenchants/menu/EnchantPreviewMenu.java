@@ -3,6 +3,7 @@ package me.whipmegrandma.customenchants.menu;
 import lombok.Data;
 import lombok.Getter;
 import me.clip.placeholderapi.PlaceholderAPI;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
@@ -14,6 +15,7 @@ import org.mineacademy.fo.menu.button.Button;
 import org.mineacademy.fo.menu.model.ItemCreator;
 import org.mineacademy.fo.model.ConfigSerializable;
 import org.mineacademy.fo.model.HookManager;
+import org.mineacademy.fo.model.SimpleSound;
 import org.mineacademy.fo.remain.CompMaterial;
 import org.mineacademy.fo.settings.YamlConfig;
 
@@ -70,6 +72,8 @@ public class EnchantPreviewMenu extends YamlConfig {
 			{
 				this.setTitle(title);
 				this.setSize(size);
+				setViewer(player);
+				setSound(new SimpleSound(Sound.ENTITY_ENDER_EYE_DEATH, 1));
 			}
 
 			@Override

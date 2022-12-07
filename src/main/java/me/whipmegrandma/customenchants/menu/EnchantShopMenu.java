@@ -7,6 +7,7 @@ import me.whipmegrandma.customenchants.manager.EnchantData;
 import me.whipmegrandma.customenchants.manager.EnchantsManager;
 import me.whipmegrandma.powercurrency.manager.PowerManager;
 import org.bukkit.Bukkit;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
@@ -18,10 +19,7 @@ import org.mineacademy.fo.collection.SerializedMap;
 import org.mineacademy.fo.menu.Menu;
 import org.mineacademy.fo.menu.button.Button;
 import org.mineacademy.fo.menu.model.ItemCreator;
-import org.mineacademy.fo.model.ConfigSerializable;
-import org.mineacademy.fo.model.HookManager;
-import org.mineacademy.fo.model.Replacer;
-import org.mineacademy.fo.model.SimpleEnchantment;
+import org.mineacademy.fo.model.*;
 import org.mineacademy.fo.remain.CompMaterial;
 import org.mineacademy.fo.remain.CompSound;
 import org.mineacademy.fo.settings.YamlConfig;
@@ -79,6 +77,8 @@ public class EnchantShopMenu extends YamlConfig {
 			{
 				this.setTitle(title);
 				this.setSize(size);
+				setViewer(player);
+				setSound(new SimpleSound(Sound.ENTITY_ENDER_EYE_DEATH, 1));
 			}
 
 			@Override
@@ -136,7 +136,7 @@ public class EnchantShopMenu extends YamlConfig {
 									.lore(lore)
 									.tag("CustomEnchants:Plugin", data.getEnchantment().getName().toLowerCase() + " " + data.getLevel())
 									.give(player);
-							
+
 							CompSound.ENTITY_VILLAGER_NO.play(player);
 
 							Bukkit.getLogger().severe("PowerCurrency isn't loaded. All enchants are free.");

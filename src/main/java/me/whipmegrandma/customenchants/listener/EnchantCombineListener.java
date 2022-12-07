@@ -1,11 +1,13 @@
 package me.whipmegrandma.customenchants.listener;
 
+import me.whipmegrandma.customenchants.api.EnchantCombineEvent;
 import me.whipmegrandma.customenchants.enchant.AntiHungerEnchant;
 import me.whipmegrandma.customenchants.enchant.DrillEnchant;
 import me.whipmegrandma.customenchants.enchant.HasteEnchant;
 import me.whipmegrandma.customenchants.enchant.SpeedEnchant;
 import me.whipmegrandma.customenchants.manager.EnchantsManager;
 import org.bukkit.GameMode;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -13,11 +15,14 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.mineacademy.fo.Common;
 import org.mineacademy.fo.annotation.AutoRegister;
 import org.mineacademy.fo.menu.model.ItemCreator;
 import org.mineacademy.fo.model.SimpleEnchantment;
 import org.mineacademy.fo.remain.CompMaterial;
 import org.mineacademy.fo.remain.CompMetadata;
+import org.mineacademy.fo.remain.CompParticle;
+import org.mineacademy.fo.remain.CompSound;
 
 import java.util.Arrays;
 import java.util.List;
@@ -52,12 +57,15 @@ public final class EnchantCombineListener implements Listener {
 
 		ItemStack itemOne = event.getCursor();
 		ItemStack itemTwo = event.getCurrentItem();
-		String metaData = CompMetadata.hasMetadata(clickedOrCursor ? itemOne : itemTwo, "CustomEnchants:Plugin") ? CompMetadata.getMetadata(clickedOrCursor ? itemOne : itemTwo, "CustomEnchants:Plugin") : null;
+		String metaData = CompMetadata.getMetadata(clickedOrCursor ? itemOne : itemTwo, "CustomEnchants:Plugin");
 
 		if (metaData == null || CompMaterial.isAir(clickedOrCursor ? itemTwo : itemOne) || event.getClickedInventory() == null || event.getWhoClicked().getGameMode() == GameMode.CREATIVE)
 			return;
 
 		String[] data = metaData.split(" ");
+
+		if (data.length != 2)
+			return;
 
 		SimpleEnchantment enchant = EnchantsManager.findEnchantment(data[0]);
 		Integer level = Integer.parseInt(data[1]);
@@ -90,6 +98,9 @@ public final class EnchantCombineListener implements Listener {
 		Player player = (Player) event.getWhoClicked();
 		ItemStack clicked = clickedOrCursor ? event.getCurrentItem() : event.getCursor();
 
+		if (!Common.callEvent(new EnchantCombineEvent(player, clicked, enchant, level)))
+			return;
+
 		Integer slot = event.getSlot();
 		Inventory inventory = event.getClickedInventory();
 
@@ -99,5 +110,14 @@ public final class EnchantCombineListener implements Listener {
 		event.setCancelled(true);
 		player.setItemOnCursor(clickedOrCursor ? null : updatedItem);
 
+	}
+
+	@EventHandler
+	public void onCombine(EnchantCombineEvent event) {
+		Player player = event.getPlayer();
+		Location location = player.getLocation();
+
+		CompParticle.FLASH.spawn(player, location);
+		CompSound.SUCCESSFUL_HIT.play(player);
 	}
 }
