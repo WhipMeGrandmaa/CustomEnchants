@@ -26,10 +26,12 @@ import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.mineacademy.fo.RandomUtil;
 import org.mineacademy.fo.annotation.AutoRegister;
 import org.mineacademy.fo.model.HookManager;
 import org.mineacademy.fo.model.Triple;
 import org.mineacademy.fo.remain.CompMaterial;
+import org.mineacademy.fo.remain.CompParticle;
 
 import java.util.HashMap;
 import java.util.UUID;
@@ -198,11 +200,16 @@ public final class EnchantEffectListener implements Listener {
 	private void drillExecute(Location locationBlock, Player player) {
 		Block block = locationBlock.getBlock();
 
-		if (block.getType() == CompMaterial.BEDROCK.toMaterial())
+		if (block.getType() == CompMaterial.BEDROCK.toMaterial() || CompMaterial.isAir(block))
 			return;
 
-		if (this.worldGuardTest(locationBlock, player))
-			block.breakNaturally();
+		if (this.worldGuardTest(locationBlock, player)) {
+			block.breakNaturally(player.getInventory().getItemInMainHand());
+			boolean chance = RandomUtil.chance(25);
+			
+			if (chance)
+				CompParticle.CLOUD.spawn(locationBlock);
+		}
 	}
 
 	private boolean worldGuardTest(Location locationBlock, Player player) {
