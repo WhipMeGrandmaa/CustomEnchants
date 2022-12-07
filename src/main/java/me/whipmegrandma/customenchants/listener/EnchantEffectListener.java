@@ -14,9 +14,11 @@ import me.whipmegrandma.customenchants.enchant.HasteEnchant;
 import me.whipmegrandma.customenchants.enchant.SpeedEnchant;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.ExperienceOrb;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -27,6 +29,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.mineacademy.fo.RandomUtil;
+import org.mineacademy.fo.Valid;
 import org.mineacademy.fo.annotation.AutoRegister;
 import org.mineacademy.fo.model.HookManager;
 import org.mineacademy.fo.model.Triple;
@@ -199,17 +202,59 @@ public final class EnchantEffectListener implements Listener {
 
 	private void drillExecute(Location locationBlock, Player player) {
 		Block block = locationBlock.getBlock();
+		ItemStack tool = player.getInventory().getItemInMainHand();
 
 		if (block.getType() == CompMaterial.BEDROCK.toMaterial() || CompMaterial.isAir(block))
 			return;
 
-		if (this.worldGuardTest(locationBlock, player)) {
-			block.breakNaturally(player.getInventory().getItemInMainHand());
+		if (this.worldGuardTest(locationBlock, player) && !block.getDrops(tool).isEmpty()) {
+			this.drillExpDrop(block);
+			block.breakNaturally(tool);
+
 			boolean chance = RandomUtil.chance(25);
-			
+
 			if (chance)
 				CompParticle.CLOUD.spawn(locationBlock);
 		}
+	}
+
+	private void drillExpDrop(Block block) {
+		String material = block.getType().toString().toLowerCase();
+
+		if (material.contains("nether_gold_ore"))
+			this.expTimes(0, 1, block);
+
+		if (material.contains("coal_ore"))
+			this.expTimes(0, 2, block);
+
+		if (material.contains("diamond_ore") || material.contains("emerald_ore"))
+			this.expTimes(3, 7, block);
+
+		if (material.contains("lapis_ore") || material.contains("quartz_ore"))
+			this.expTimes(2, 5, block);
+
+		if (material.contains("redstone_ore"))
+			this.expTimes(1, 5, block);
+
+		if (material.contains("spawner"))
+			this.expTimes(15, 43, block);
+
+		if ("sculk".equals(material))
+			this.expTimes(1, 1, block);
+
+		if ("sculk_catalyst".equals(material) || "sculk_shrieker".equals(material) || "sculk_sensor".equals(material))
+			this.expTimes(5, 5, block);
+	}
+
+	private void expTimes(Integer min, Integer max, Block block) {
+		Valid.checkBoolean(min < max, "Max must be higher than low.");
+
+		Location location = block.getLocation();
+		World world = location.getWorld();
+
+		Integer random = min + RandomUtil.nextInt((max + 1) - min);
+
+		world.spawn(location, ExperienceOrb.class).setExperience(random);
 	}
 
 	private boolean worldGuardTest(Location locationBlock, Player player) {
