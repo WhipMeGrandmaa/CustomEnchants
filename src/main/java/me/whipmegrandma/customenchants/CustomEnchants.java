@@ -51,4 +51,9 @@ public final class CustomEnchants extends SimplePlugin {
 	public static CustomEnchants getInstance() {
 		return (CustomEnchants) SimplePlugin.getInstance();
 	}
+
+	@Override
+	public int getMetricsPluginId() {
+		return 17039;
+	}
 }

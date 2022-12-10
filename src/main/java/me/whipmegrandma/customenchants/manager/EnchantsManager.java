@@ -1,5 +1,7 @@
 package me.whipmegrandma.customenchants.manager;
 
+import org.bukkit.enchantments.Enchantment;
+import org.bukkit.inventory.ItemStack;
 import org.mineacademy.fo.model.SimpleEnchantment;
 
 import java.util.ArrayList;
@@ -62,6 +64,26 @@ public class EnchantsManager {
 		}
 
 		return list;
+	}
+
+	public static boolean itemContains(ItemStack item, Enchantment enchantment) {
+
+		for (Enchantment enchant : item.getEnchantments().keySet())
+			return enchant.equals(enchantment);
+
+		return false;
+	}
+
+	public static Integer level(ItemStack item, Enchantment enchantment) {
+
+		for (Map.Entry<Enchantment, Integer> enchant : item.getEnchantments().entrySet()) {
+			Enchantment name = enchant.getKey();
+			Integer level = enchant.getValue();
+
+			return name.equals(enchantment) ? level : null;
+		}
+
+		return null;
 	}
 
 }

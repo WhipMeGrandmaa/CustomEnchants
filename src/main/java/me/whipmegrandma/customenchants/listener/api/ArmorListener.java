@@ -217,7 +217,7 @@ public final class ArmorListener implements Listener {
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void playerInteractEvent(PlayerInteractEvent e) {
 		if (e.useItemInHand().equals(Result.DENY)) return;
-		//
+		
 		if (e.getAction() == Action.PHYSICAL) return;
 		if (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) {
 			Player player = e.getPlayer();

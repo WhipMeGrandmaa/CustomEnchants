@@ -1,4 +1,4 @@
-Title: "&5Custom Enchants Preview"
+Title: "&5Custom Enchants Shop"
 Size: "9 * 6"
 Buttons:
   Player_Info:
@@ -12,6 +12,8 @@ Buttons:
       - "&6Power : %powercurrency_playerpower%"
       - "&6Lives : %lifemc_lives%"
   Haste:
+    Enchantment: Haste
+    Level: 1
     Slot: "9 * 2 + 3"
     Material: ENCHANTED_BOOK
     Title: "&7&lHaste"
@@ -21,7 +23,11 @@ Buttons:
       - "&f* &ePower Price &7>> &a350"
       - "&f* &eDescription &7>> &5Grants the user a"
       - "&5Haste Effect when holding a tool."
+    Clicked:
+      Price: 350
   Speed:
+    Enchantment: Speed
+    Level: 1
     Slot: "9 * 2 + 4"
     Material: ENCHANTED_BOOK
     Title: "&7&lSpeed"
@@ -31,7 +37,11 @@ Buttons:
       - "&f* &ePower Price &7>> &a350"
       - "&f* &eDescription &7>> &5Grants the user a"
       - "&5Speed Boost when wearing boots."
+    Clicked:
+      Price: 350
   Anti-Hunger:
+    Enchantment: Anti-Hunger
+    Level: 1
     Slot: "9 * 2 + 5"
     Material: ENCHANTED_BOOK
     Title: "&7&lAnti-Hunger"
@@ -41,7 +51,11 @@ Buttons:
       - "&f* &ePower Price &7>> &a500"
       - "&f* &eDescription &7>> &5Grants the user "
       - "&5Hunger Saturation when wearing a helmet."
+    Clicked:
+      Price: 350
   Drill:
+    Enchantment: Drill
+    Level: 1
     Slot: "9 * 3 + 4"
     Material: ENCHANTED_BOOK
     Title: "&7&lDrill"
@@ -51,6 +65,8 @@ Buttons:
       - "&f* &ePower Price &7>> &a700"
       - "&f* &eDescription &7>> &5When a tool is "
       - "&5used, it will mine in a 3x3 area."
+    Clicked:
+      Price: 350
   1:
     Slot: "9 * 0 + 0"
     Material: GRAY_STAINED_GLASS_PANE

@@ -75,7 +75,7 @@ public final class EnchantCombineListener implements Listener {
 
 		String material = clickedOrCursor ? itemTwo.getType().toString().toLowerCase() : itemOne.getType().toString().toLowerCase();
 
-		if (clickedOrCursor ? itemTwo.containsEnchantment(enchant) : itemOne.containsEnchantment(enchant))
+		if (clickedOrCursor ? EnchantsManager.itemContains(itemTwo, enchant) : EnchantsManager.itemContains(itemOne, enchant))
 			return;
 
 		if (enchant.equals(AntiHungerEnchant.getInstance()) && material.contains("_helmet"))
@@ -128,13 +128,13 @@ public final class EnchantCombineListener implements Listener {
 
 		PotionEffect effect = null;
 
-		if (updatedItem.containsEnchantment(SpeedEnchant.getInstance()))
+		if (EnchantsManager.itemContains(updatedItem, SpeedEnchant.getInstance()))
 			effect = new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 0);
 
-		if (updatedItem.containsEnchantment(AntiHungerEnchant.getInstance()))
+		if (EnchantsManager.itemContains(updatedItem, AntiHungerEnchant.getInstance()))
 			effect = new PotionEffect(PotionEffectType.SATURATION, Integer.MAX_VALUE, 0);
 
-		if (updatedItem.containsEnchantment(HasteEnchant.getInstance()))
+		if (EnchantsManager.itemContains(updatedItem, HasteEnchant.getInstance()))
 			effect = effect = new PotionEffect(PotionEffectType.FAST_DIGGING, Integer.MAX_VALUE, 0);
 
 		if (effect != null)
