@@ -69,19 +69,17 @@ public class EnchantsManager {
 	public static boolean itemContains(ItemStack item, Enchantment enchantment) {
 
 		for (Enchantment enchant : item.getEnchantments().keySet())
-			return enchant.equals(enchantment);
+			if (enchant.equals(enchantment))
+				return true;
 
 		return false;
 	}
 
 	public static Integer level(ItemStack item, Enchantment enchantment) {
 
-		for (Map.Entry<Enchantment, Integer> enchant : item.getEnchantments().entrySet()) {
-			Enchantment name = enchant.getKey();
-			Integer level = enchant.getValue();
-
-			return name.equals(enchantment) ? level : null;
-		}
+		for (Map.Entry<Enchantment, Integer> enchant : item.getEnchantments().entrySet())
+			if (enchant.equals(enchantment))
+				return enchant.getValue();
 
 		return null;
 	}

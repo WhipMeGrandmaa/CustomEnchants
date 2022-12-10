@@ -55,7 +55,7 @@ public final class EnchantCombineListener implements Listener {
 
 	private void combine(boolean clickedOrCursor, InventoryClickEvent event) {
 
-		if (event.getCurrentItem() == null)
+		if (CompMaterial.isAir(event.getCurrentItem()))
 			return;
 
 		ItemStack itemOne = event.getCursor();

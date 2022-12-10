@@ -55,7 +55,7 @@ public final class EnchantEffectListener implements Listener {
 	public void onEquip(ArmorEquipEvent event) {
 		ItemStack armor = event.getNewArmorPiece();
 
-		if (armor == null || CompMaterial.isAir(armor) || armor.getEnchantments().isEmpty())
+		if (CompMaterial.isAir(armor) || CompMaterial.isAir(armor) || armor.getEnchantments().isEmpty())
 			return;
 
 		Player player = event.getPlayer();
@@ -75,20 +75,24 @@ public final class EnchantEffectListener implements Listener {
 
 	@EventHandler
 	public void onUnequip(ArmorEquipEvent event) {
-		ItemStack armor = event.getOldArmorPiece();
+		ItemStack armorOld = event.getOldArmorPiece();
+		ItemStack armorNew = event.getNewArmorPiece();
 
-		if (armor == null || CompMaterial.isAir(armor) || armor.getEnchantments().isEmpty())
+		if (CompMaterial.isAir(armorOld) || CompMaterial.isAir(armorOld) || armorOld.getEnchantments().isEmpty())
+			return;
+
+		if (!CompMaterial.isAir(armorNew) && (EnchantsManager.itemContains(armorNew, SpeedEnchant.getInstance()) || EnchantsManager.itemContains(armorNew, AntiHungerEnchant.getInstance())))
 			return;
 
 		Player player = event.getPlayer();
-		String name = armor.getType().toString().toLowerCase();
+		String name = armorOld.getType().toString().toLowerCase();
 
 		PotionEffectType effect = null;
 
-		if (name.contains("boots") && EnchantsManager.itemContains(armor, SpeedEnchant.getInstance()))
+		if (name.contains("boots") && EnchantsManager.itemContains(armorOld, SpeedEnchant.getInstance()))
 			effect = PotionEffectType.SPEED;
 
-		if (name.contains("helmet") && EnchantsManager.itemContains(armor, AntiHungerEnchant.getInstance()))
+		if (name.contains("helmet") && EnchantsManager.itemContains(armorOld, AntiHungerEnchant.getInstance()))
 			effect = PotionEffectType.SATURATION;
 
 		if (effect != null)
@@ -160,7 +164,7 @@ public final class EnchantEffectListener implements Listener {
 		BlockFace face = event.getBlockFace();
 		ItemStack tool = player.getInventory().getItemInMainHand();
 
-		if (block == null || CompMaterial.isAir(tool) || !EnchantsManager.itemContains(tool, DrillEnchant.getInstance()) || player.getGameMode() == GameMode.CREATIVE)
+		if (CompMaterial.isAir(block) || CompMaterial.isAir(tool) || !EnchantsManager.itemContains(tool, DrillEnchant.getInstance()) || player.getGameMode() == GameMode.CREATIVE)
 			return;
 
 		String name = tool.getType().toString().toLowerCase();
@@ -168,7 +172,7 @@ public final class EnchantEffectListener implements Listener {
 		Enchantment enchant = DrillEnchant.getInstance();
 		Integer level = EnchantsManager.level(tool, enchant);
 		boolean test = event.getClickedBlock() == null;
-		
+
 		if (!test && this.worldGuardTest(block.getLocation(), player))
 			drillEnchantDirection.put(uuid, new Triple<>(face, level, tool));
 	}
@@ -190,13 +194,17 @@ public final class EnchantEffectListener implements Listener {
 
 	@EventHandler
 	public void onItemUnheld(PlayerItemHeldEvent event) {
-		ItemStack tool = event.getPlayer().getInventory().getItem(event.getPreviousSlot());
+		ItemStack toolPrevious = event.getPlayer().getInventory().getItem(event.getPreviousSlot());
+		ItemStack toolNew = event.getPlayer().getInventory().getItem(event.getNewSlot());
 
-		if (CompMaterial.isAir(tool) || !EnchantsManager.itemContains(tool, HasteEnchant.getInstance()))
+		if (CompMaterial.isAir(toolPrevious) || !EnchantsManager.itemContains(toolPrevious, HasteEnchant.getInstance()))
+			return;
+
+		if (!CompMaterial.isAir(toolNew) && EnchantsManager.itemContains(toolNew, HasteEnchant.getInstance()))
 			return;
 
 		Player player = event.getPlayer();
-		String name = tool.getType().toString().toLowerCase();
+		String name = toolPrevious.getType().toString().toLowerCase();
 
 		PotionEffectType effect = PotionEffectType.FAST_DIGGING;
 
@@ -220,10 +228,10 @@ public final class EnchantEffectListener implements Listener {
 		if (heldSlot != clickedSlot)
 			return;
 
-		if (clickedItem != null && EnchantsManager.itemContains(clickedItem, HasteEnchant.getInstance())) ;
+		if (!CompMaterial.isAir(clickedItem) && EnchantsManager.itemContains(clickedItem, HasteEnchant.getInstance())) ;
 		player.removePotionEffect(PotionEffectType.FAST_DIGGING);
 
-		if (cursor != null && EnchantsManager.itemContains(cursor, HasteEnchant.getInstance()))
+		if (!CompMaterial.isAir(cursor) && EnchantsManager.itemContains(cursor, HasteEnchant.getInstance()))
 			player.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, Integer.MAX_VALUE, 0));
 	}
 
